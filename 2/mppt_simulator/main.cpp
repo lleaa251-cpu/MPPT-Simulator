@@ -28,11 +28,11 @@ double readDouble(const std::string& prompt, double lo, double hi) {
     }
 }
 
-int readInt(const std::string& prompt, int lo, int hi) {
+int readInt(const std::string& prompt,int lo,int hi) {
     int val;
     while (true) {
         std::cout << prompt;
-        if (std::cin >> val && val >= lo && val <= hi) { clearBuffer(); return val; }
+        if (std::cin >> val && val >= lo && val <= hi) { clearBuffer();return val; }
         std::cout << "  [!] 請輸入 " << lo << " ~ " << hi << " 的整數。\n";
         clearBuffer();
     }
@@ -50,7 +50,7 @@ void askExportCSV(const std::string& fname,
 }
 
 // ── 模式 A：靜態 MPPT ────────────────────────────────────────
-void modeStatic(const SolarCell& cell) {
+void modeStatic(const SolarCell&cell) {
     auto scenes = getPresetScenarios();
     const int CUSTOM = (int)scenes.size() - 1;
 
@@ -70,8 +70,8 @@ void modeStatic(const SolarCell& cell) {
     double G, T_C; std::string name;
 
     if (ch - 1 == CUSTOM) {
-        G = readDouble("  日照強度 G (W/m2) [50~1200]: ", 50, 1200);
-        T_C = readDouble("  環境溫度 T (°C)  [0~70]:    ",  0,  70);
+        G = readDouble("日照強度 G(W/m2) [50~1200]: ",50,1200);
+        T_C = readDouble("環境溫度 T(°C) [0~55]:    ",0,55);
         name = "自訂條件";
     } else {
         G = scenes[ch-1].G; T_C = scenes[ch-1].T_C;
@@ -79,14 +79,14 @@ void modeStatic(const SolarCell& cell) {
     }
 
     std::cout << "\n  [計算中...]\n\n";
-    auto curve  = scanIVCurve(cell, G, T_C, 300);
-    auto result = findMPP(curve, G, cell.A_cell);
-    printMPPTResult(result, G, T_C, name);
-    printPVChart(curve, result);
+    auto curve  = scanIVCurve(cell,G,T_C,300);
+    auto result = findMPP(curve,G,cell.A_cell);
+    printMPPTResult(result,G,T_C,name);
+    printPVChart(curve,result);
 
     static int cnt = 0;
     askExportCSV("mppt_static_" + std::to_string(++cnt) + ".csv",
-        [&](const std::string& fn){ return exportCSV(curve, result, G, T_C, fn); });
+        [&](const std::string& fn){ return exportCSV(curve, result,G,T_C,fn); });
 }
 
 // ── 模式 B：健康診斷 ─────────────────────────────────────────
@@ -96,11 +96,11 @@ void modeDiagnosis(const SolarCell& cell) {
     printSeparator('-');
     std::cout << "  步驟 1：輸入量測當下的天氣條件\n\n";
 
-    double G   = readDouble("  日照強度 G (W/m2) [50~1200]: ", 50, 1200);
-    double T_C = readDouble("  環境溫度 T (°C)  [0~70]:    ",  0,   70);
+    double G   = readDouble("日照強度 G(W/m2) [50~1200]: ",50,1200);
+    double T_C = readDouble("環境溫度 T(°C)  [0~55]:    ", 0,55);
 
-    auto curve = scanIVCurve(cell, G, T_C, 300);
-    auto th    = findMPP(curve, G, cell.A_cell);
+    auto curve = scanIVCurve(cell,G,T_C,300);
+    auto th    = findMPP(curve,G,cell.A_cell);
 
     std::cout << std::fixed << std::setprecision(3);
     std::cout << "\n  【理論值（同條件下）】\n";
