@@ -16,7 +16,7 @@ struct SolarCell {
     // 電路等效參數
     double Rs      = 0.3;      // 串聯電阻 (Ω)
     double Rsh     = 300.0;    // 並聯電阻 (Ω)
-    double n       = 1.4;      // 二極體理想因子
+    double n       = 1.3;      // 二極體理想因子
     double I0      = 1e-10;    // 暗電流 (A)
 
     // 物理常數
