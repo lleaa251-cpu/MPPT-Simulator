@@ -19,7 +19,7 @@
   3. 如有缺須把沒有查找到的補進資料夾 mv ../2/mppt_simulator/要的檔案  
   4. 補:執行多檔案合併(但在這之前要先設定header files(因為我一直忘記TT)):   
      註解"開啟GNU C++指定C++17並啟用-02優化，輸出的執行檔mppt_simulator<br>，並將下方第二行的檔案融合成一個執行檔。  
-  g++ -std=c++17 -O2 -o mppt_simulator main.cpp solar_cell.cpp iv_curve.cpp <br>  mppt.cpp weather_scenario.cpp output.cpp diagnosis.cpp dynamic.cpp <br>---- 確定無誤後 ---
+  g++ -std=c++17 -O2 -o mppt_simulator main.cpp solar_cell.cpp iv_curve.cpp mppt.cpp weather_scenario.cpp output.cpp diagnosis.cpp dynamic.cpp <br>---- 確定無誤後 ---
    5. 執行./mppt_simulator或是mppt_simulator.exe
 
 【核心公式說明】
