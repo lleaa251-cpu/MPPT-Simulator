@@ -1,9 +1,6 @@
 #include "iv_curve.h"
 #include <cmath>
-
-// ============================================================
 //  iv_curve.cpp — I-V 曲線掃描實作
-// ============================================================
 
 std::vector<DataPoint> scanIVCurve(
     const SolarCell& cell,
