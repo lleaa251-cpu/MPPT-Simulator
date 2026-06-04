@@ -6,18 +6,13 @@
 #include <string>
 #include <algorithm>
 #include <cmath>
-
-// ============================================================
 //  output.cpp — 輸出模組實作
-// ============================================================
 
 void printSeparator(char c, int width) {
     std::cout << std::string(width, c) << "\n";
 }
 
-// ----------------------------------------------------------
 //  printMPPTResult — 輸出 MPPT 結果表格
-// ----------------------------------------------------------
 void printMPPTResult(const MPPTResult& r, double G, double T_C,
                      const std::string& sceneName)
 {
@@ -39,8 +34,6 @@ void printMPPTResult(const MPPTResult& r, double G, double T_C,
     printSeparator('-');
     std::cout << "  填充因子  FF   = " << std::setw(7) << r.FF * 100.0 << " %\n";
     std::cout << "  轉換效率  eta  = " << std::setw(7) << r.eta         << " %\n";
-
-    // 效率評語
     std::cout << "\n  效率評估：";
     if (r.eta >= 15.0)
         std::cout << "優良（商業級多晶矽水準）";
@@ -52,13 +45,9 @@ void printMPPTResult(const MPPTResult& r, double G, double T_C,
     printSeparator('=');
 }
 
-// ----------------------------------------------------------
 //  printPVChart — ASCII P-V 折線圖
 //
-//  縱軸：功率 P（W）
-//  橫軸：電壓 V（V）
-//  MPP 用 [*] 標記
-// ----------------------------------------------------------
+//  縱軸：功率 P（W），橫軸：電壓 V（V），MPP 用[*]標記
 void printPVChart(const std::vector<DataPoint>& curve,
                   const MPPTResult& r,
                   int W, int H)
@@ -67,11 +56,8 @@ void printPVChart(const std::vector<DataPoint>& curve,
 
     double Voc  = curve.back().V;
     double Pmax = r.Pmpp * 1.15;   // 縱軸上界留 15% 空間
+    std::vector<std::string> grid(H, std::string(W, ' '));  // 建立字元網格（空格初始化）
 
-    // 建立字元網格（空格初始化）
-    std::vector<std::string> grid(H, std::string(W, ' '));
-
-    // 將曲線資料點投影到網格
     for (const auto& dp : curve) {
         if (Voc <= 0 || Pmax <= 0) break;
         int col = static_cast<int>((dp.V / Voc) * (W - 1));
@@ -111,9 +97,7 @@ void printPVChart(const std::vector<DataPoint>& curve,
     std::cout << "\n\n";
 }
 
-// ----------------------------------------------------------
 //  exportCSV — 輸出 CSV 檔案
-// ----------------------------------------------------------
 bool exportCSV(const std::vector<DataPoint>& curve,
                const MPPTResult& r,
                double G, double T_C,
@@ -122,7 +106,6 @@ bool exportCSV(const std::vector<DataPoint>& curve,
     std::ofstream ofs(filename);
     if (!ofs.is_open()) return false;
 
-    // 標頭資訊（Excel 開啟後的備註列）
     ofs << "# MPPT Simulator - 模擬結果匯出\n";
     ofs << "# 日照強度(W/m2)," << G   << "\n";
     ofs << "# 溫度(degC),"     << T_C << "\n";
@@ -131,7 +114,6 @@ bool exportCSV(const std::vector<DataPoint>& curve,
         << ",eta(%),"    << r.eta  << "\n";
     ofs << "#\n";
 
-    // 欄位標題
     ofs << "Voltage(V),Current(A),Power(W)\n";
 
     ofs << std::fixed << std::setprecision(6);
