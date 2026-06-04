@@ -6,7 +6,6 @@
 //  solar_cell.cpp — 歸一化工程模型
 //
 //  核心方程式，歸一化單二極體近似：
-//
 //    令 v = V / Voc（歸一化電壓，0~1）
 //    I(v) = Iph * (1 - v^alpha)
 //
@@ -14,7 +13,6 @@
 //    alpha = 30 → FF ≈ 77%，Vmpp/Voc ≈ 0.90（商業多晶矽典型值）
 //
 //  此為完整單二極體模型的工程近似解；完整模型為：
-//
 //    I = Iph - I0*(exp((V+I*Rs)/Vt) - 1) - (V+I*Rs)/Rsh
 //
 //  隱式方程式需用牛頓法迭代求解。
@@ -78,10 +76,8 @@ double SolarCell::calcCurrent(double V, double G, double T_C) const {
     return I;
 }
 
-// ----------------------------------------------------------
 //  calcVoc — 工程近似
 //  Voc 由 Voc_ref 出發，加溫度係數與日照補償
-// ----------------------------------------------------------
 double SolarCell::calcVoc(double G, double T_C) const {
     double Voc = Voc_ref + Kv * (T_C - 25.0);
     // 低日照時 Voc 依對數略降（ΔVoc ≈ Vt*ln(G/G_ref)）
