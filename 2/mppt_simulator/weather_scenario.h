@@ -1,6 +1,5 @@
 #ifndef WEATHER_SCENARIO_H
 #define WEATHER_SCENARIO_H
-
 //  weather_scenario.h — 預設天氣場景模組
 
 #include <string>
