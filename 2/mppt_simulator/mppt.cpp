@@ -1,9 +1,6 @@
 #include "mppt.h"
 #include <algorithm>
-
-// ============================================================
 //  mppt.cpp — 最大功率點追蹤實作
-// ============================================================
 
 MPPTResult findMPP(
     const std::vector<DataPoint>& curve,
